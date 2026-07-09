@@ -1,0 +1,15 @@
+{
+  "name": "attachment-librarian",
+  "version": "1.0.0",
+  "description": "Outlook add-in that indexes every attachment in your mail, grouped by document with versions newest-first.",
+  "private": true,
+  "scripts": {
+    "validate": "office-addin-manifest validate manifest.xml",
+    "test": "node test/librarian.test.js"
+  },
+  "author": "Matthew Miller",
+  "license": "MIT",
+  "devDependencies": {
+    "office-addin-manifest": "^2.0.4"
+  }
+}

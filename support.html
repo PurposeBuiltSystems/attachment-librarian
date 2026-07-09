@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — Attachment Librarian</title>
+  <style>
+    body { font-family: -apple-system, Segoe UI, sans-serif; margin: 3rem auto; max-width: 44rem; padding: 0 1rem; color: #242424; line-height: 1.55; }
+    h1 { color: #0f6cbd; }
+    h2 { margin-top: 2rem; }
+    code { background: #f3f2f1; padding: 0.1rem 0.3rem; border-radius: 3px; }
+    .muted { color: #616161; }
+  </style>
+</head>
+<body>
+  <h1>Support</h1>
+  <p class="muted">Add-in: <strong>Attachment Librarian</strong></p>
+
+  <h2>What it does</h2>
+  <p>Indexes every file attachment in your mailbox, groups versions of the same
+     document together (Budget_v2 / Budget FINAL / Budget (1) are one lineage,
+     newest first), and opens the carrying email in one click.</p>
+
+  <h2>How to use it</h2>
+  <ol>
+    <li>Open any message in Outlook and click <strong>Attachment Librarian</strong> on the ribbon.</li>
+    <li>Click <strong>Index my attachments</strong>. Sign in / consent the first
+        time (Microsoft prompt). The add-in only reads your own mailbox.</li>
+    <li>Search by file name, sender, or subject. Expand a document to see its
+        versions; <strong>Open email</strong> takes you to the message that
+        carried that version.</li>
+  </ol>
+
+  <h2>Options</h2>
+  <ul>
+    <li><strong>Days back:</strong> how far back to index (default 90, up to 365).</li>
+  </ul>
+
+  <h2>Good to know</h2>
+  <ul>
+    <li><strong>Metadata only:</strong> the index reads file names, sizes, senders,
+        and dates — never the file contents.</li>
+    <li><strong>Version grouping is best-effort:</strong> it recognizes common
+        patterns (v2, FINAL, draft, (1), dates). Unusually named files may appear
+        as separate documents.</li>
+    <li><strong>Inline images are skipped</strong> — signature logos aren't documents.</li>
+  </ul>
+
+  <h2>Troubleshooting</h2>
+  <ul>
+    <li><strong>Button doesn't appear:</strong> make sure you're on a Microsoft 365 /
+        Exchange Online account viewing a message.</li>
+    <li><strong>Indexing is slow:</strong> large windows over attachment-heavy
+        mailboxes take longer — reduce "Days back".</li>
+    <li><strong>The email didn't open:</strong> some clients can't open messages
+        programmatically; the add-in then opens it in Outlook on the web.</li>
+  </ul>
+
+  <h2>Privacy</h2>
+  <p>Your email never leaves Microsoft 365 — indexing runs in your own Outlook
+     session and we never receive your data. See the
+     <a href="privacy-policy.html">Privacy Policy</a>.</p>
+
+  <h2>Contact</h2>
+  <p>For help or to report an issue, email
+     <a href="mailto:Matthew@purposebuilt.systems">Matthew@purposebuilt.systems</a>.</p>
+</body>
+</html>

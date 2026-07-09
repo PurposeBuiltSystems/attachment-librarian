@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Attachment Librarian</title>
+
+  <!-- Office.js -->
+  <script src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+  <!-- MSAL Browser (provides createNestablePublicClientApplication for NAA) -->
+  <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.1/lib/msal-browser.min.js"></script>
+
+  <link rel="stylesheet" href="taskpane.css" />
+</head>
+<body>
+  <header class="app-head">
+    <h1>Attachment Librarian</h1>
+    <p class="sub">Every attachment in your mail, grouped by document with versions in order — find the latest in seconds.</p>
+  </header>
+
+  <section class="controls">
+    <button id="scan" class="primary">Index my attachments</button>
+    <details id="options" class="options">
+      <summary>Options</summary>
+      <div class="row">
+        <label>Days back
+          <input id="daysBack" type="number" min="7" max="365" value="90" />
+        </label>
+      </div>
+    </details>
+  </section>
+
+  <section id="status" class="status" hidden></section>
+
+  <section id="results" class="results" hidden>
+    <div class="actions">
+      <input id="search" type="search" placeholder="Search file, sender, or subject…" />
+    </div>
+    <div id="groups"></div>
+  </section>
+
+  <script src="../graph.js"></script>
+  <script src="../librarian.js"></script>
+  <script src="taskpane.js"></script>
+</body>
+</html>
