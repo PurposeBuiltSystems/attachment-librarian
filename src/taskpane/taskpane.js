@@ -90,8 +90,16 @@
       g.versions.forEach(function (v) {
         var row = document.createElement("div");
         row.className = "who";
-        row.textContent = v.name + " — " + Librarian.fmtSize(v.size) + " — " +
-          (v.fromName || "?") + " — " + fmtDate(v.date) + "  ";
+        var line = v.name + " — " + Librarian.fmtSize(v.size) + " — " +
+          (v.fromName || "?") + " — " + fmtDate(v.date);
+        // Show the file's own modified date when it meaningfully differs from
+        // the email date (email doesn't always preserve it, but when it does
+        // it's the real "change date").
+        if (v.fileModified) {
+          var diff = Math.abs((Date.parse(v.fileModified) || 0) - (Date.parse(v.date) || 0));
+          if (diff > 864e5) { line += " — file modified " + fmtDate(v.fileModified); }
+        }
+        row.textContent = line + "  ";
         var open = document.createElement("button");
         open.textContent = "Open email";
         open.addEventListener("click", function () { openMessage(v); });

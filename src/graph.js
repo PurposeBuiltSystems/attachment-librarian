@@ -68,7 +68,7 @@
       "/me/messages" +
         "?$select=id,subject,from,receivedDateTime,webLink" +
         "&$filter=hasAttachments eq true and receivedDateTime ge " + since +
-        "&$expand=attachments($select=id,name,size,contentType,isInline)" +
+        "&$expand=attachments($select=id,name,size,contentType,isInline,lastModifiedDateTime)" +
         "&$top=50"
     );
     if (onProgress) { onProgress(msgs.length); }
@@ -84,6 +84,7 @@
           size: a.size,
           contentType: a.contentType,
           date: m.receivedDateTime,
+          fileModified: a.lastModifiedDateTime || null,
           fromName: from.name || from.address || "",
           fromAddress: from.address || "",
           subject: m.subject || "",
