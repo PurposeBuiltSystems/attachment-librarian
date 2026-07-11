@@ -51,6 +51,23 @@ check("filter no match", f3.length, 0);
 check("size KB", L.fmtSize(2048), "2 KB");
 check("size MB", L.fmtSize(3 * 1048576), "3.0 MB");
 
+
+// re-send detection: same name+size = copies, size change = new version
+var g2 = L.groupAttachments([
+  att("Minutes.docx", "2026-06-01T00:00:00Z"),
+  att("Minutes.docx", "2026-06-08T00:00:00Z"),
+  att("Minutes.docx", "2026-06-15T00:00:00Z"),
+]);
+check("copies grouped", g2[0].versions.length, 3);
+check("one distinct version", g2[0].distinctVersions, 1);
+check("newest copy not flagged", g2[0].versions[0].resend, false);
+check("older copies flagged", g2[0].versions[1].resend && g2[0].versions[2].resend, true);
+
+var bigger = att("Minutes.docx", "2026-06-20T00:00:00Z");
+bigger.size = 2000; // content changed
+var g3 = L.groupAttachments([att("Minutes.docx", "2026-06-01T00:00:00Z"), bigger]);
+check("size change = distinct version", g3[0].distinctVersions, 2);
+
 if (failures) {
   console.error("\n" + failures + " librarian test(s) FAILED");
   process.exit(1);

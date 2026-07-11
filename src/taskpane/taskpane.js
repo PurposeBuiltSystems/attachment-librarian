@@ -82,7 +82,14 @@
       name.textContent = g.displayName;
       var meta = document.createElement("span");
       meta.className = "age";
-      meta.textContent = (g.versions.length > 1 ? g.versions.length + " versions · " : "") + fmtDate(g.latest);
+      var counts = "";
+      if (g.versions.length > 1) {
+        counts = g.distinctVersions === g.versions.length
+          ? g.versions.length + " versions · "
+          : g.distinctVersions + " version" + (g.distinctVersions > 1 ? "s" : "") +
+            " · " + g.versions.length + " copies · ";
+      }
+      meta.textContent = counts + fmtDate(g.latest);
       sum.appendChild(name);
       sum.appendChild(meta);
       det.appendChild(sum);
@@ -99,6 +106,7 @@
           var diff = Math.abs((Date.parse(v.fileModified) || 0) - (Date.parse(v.date) || 0));
           if (diff > 864e5) { line += " — file modified " + fmtDate(v.fileModified); }
         }
+        if (v.resend) { line += " — same file (re-sent)"; }
         row.textContent = line + "  ";
         var open = document.createElement("button");
         open.textContent = "Open email";

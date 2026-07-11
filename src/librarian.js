@@ -57,11 +57,27 @@
       var versions = byKey[key].sort(function (x, y) {
         return (Date.parse(y.date || 0) || 0) - (Date.parse(x.date || 0) || 0);
       });
+      // Same exact name + size (+ file-modified date when present) = the same
+      // file re-sent, not a new version. Newest copy stays the "version";
+      // older identical copies get flagged as re-sends.
+      var seen = {};
+      var distinct = 0;
+      versions.forEach(function (v) {
+        var sig = v.name.toLowerCase() + "|" + (v.size || 0) + "|" + (v.fileModified || "");
+        if (seen[sig]) {
+          v.resend = true;
+        } else {
+          seen[sig] = true;
+          v.resend = false;
+          distinct++;
+        }
+      });
       return {
         key: key,
         displayName: versions[0].name,   // most recent original filename
         ext: splitName(versions[0].name).ext,
         versions: versions,
+        distinctVersions: distinct,
         latest: versions[0].date,
       };
     });
