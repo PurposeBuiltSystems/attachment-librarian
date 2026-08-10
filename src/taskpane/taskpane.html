@@ -11,13 +11,19 @@
   <!-- MSAL Browser (provides createNestablePublicClientApplication for NAA) -->
   <script src="https://cdn.jsdelivr.net/npm/@azure/msal-browser@3.28.1/lib/msal-browser.min.js"></script>
 
-  <link rel="stylesheet" href="taskpane.css?v=2" />
+  <link rel="stylesheet" href="taskpane.css?v=3" />
 </head>
 <body>
   <header class="app-head">
     <h1>Attachment Librarian</h1>
     <p class="sub">Every attachment in your mail, grouped by document with versions in order — find the latest in seconds.</p>
   </header>
+  <!-- Certification 1100.5.7.1: a visible way out wherever there is a way in. -->
+  <div id="authRow" class="auth-row">
+    <span id="authWho">Not signed in</span>
+    <button id="signIn" class="linkish" type="button" hidden>Sign in</button>
+    <button id="signOut" class="linkish" type="button" hidden>Sign out</button>
+  </div>
 
   <section class="controls">
     <button id="scan" class="primary">Index my attachments</button>
@@ -40,8 +46,8 @@
     <div id="groups"></div>
   </section>
 
-  <script src="../graph.js?v=2"></script>
-  <script src="../librarian.js?v=2"></script>
-  <script src="taskpane.js?v=2"></script>
+  <script src="../graph.js?v=3"></script>
+  <script src="../librarian.js?v=3"></script>
+  <script src="taskpane.js?v=3"></script>
 </body>
 </html>
