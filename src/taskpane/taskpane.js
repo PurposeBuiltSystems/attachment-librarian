@@ -197,26 +197,48 @@
     }
   }
 
+  /**
+   * Open the original message.
+   *
+   * displayMessageForm is right on desktop, but on Outlook on the web and new
+   * Outlook it can no-op WITHOUT throwing - so a try/catch around it never
+   * fires, the fallback never runs, and the click does nothing and says
+   * nothing. (Exactly that was reported against the sibling Waiting On
+   * add-in.) So choose by host rather than by exception, keep each route as
+   * the other's fallback, and never return silently.
+   */
   function openMessage(v) {
-    // Preferred: open in this Outlook client. Fallback: web link.
-    try {
-      var ewsId = Office.context.mailbox.convertToEwsId(
-        v.messageId,
-        Office.MailboxEnums.RestVersion.v2_0
-      );
-      Office.context.mailbox.displayMessageForm(ewsId);
-      return;
-    } catch (e) { /* fall through */ }
-    if (v.webLink) {
+    var host = "";
+    try { host = (Office.context.mailbox.diagnostics || {}).hostName || ""; } catch (e) { host = ""; }
+    var webFirst = /web|newoutlook/i.test(host);
+
+    function viaForm() {
+      try {
+        var ewsId = Office.context.mailbox.convertToEwsId(
+          v.messageId,
+          Office.MailboxEnums.RestVersion.v2_0
+        );
+        Office.context.mailbox.displayMessageForm(ewsId);
+        return true;
+      } catch (e) { return false; }
+    }
+    function viaLink() {
+      if (!v.webLink) { return false; }
       try {
         if (Office.context.ui && Office.context.ui.openBrowserWindow) {
           Office.context.ui.openBrowserWindow(v.webLink);
         } else {
           window.open(v.webLink, "_blank");
         }
-      } catch (e2) {
-        setStatus("error", "Could not open the message.");
-      }
+        return true;
+      } catch (e) { return false; }
+    }
+
+    var ok = webFirst ? (viaLink() || viaForm()) : (viaForm() || viaLink());
+    if (!ok) {
+      setStatus("error", "This client wouldn't open the message. Search your mail for: " +
+        (v.subject || v.name || "that message"));
     }
   }
+
 })();
